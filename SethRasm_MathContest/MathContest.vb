@@ -1,4 +1,9 @@
-﻿
+﻿'Seth Rasmussen
+'RCET 0265
+'Spring 2022
+'Math Contest
+'
+
 Option Strict On
 Option Explicit On
 
@@ -6,7 +11,7 @@ Public Class MathContest
     'Set up loader for the form
     'Disable the Answer and submit 
     Private Sub MathContest_Load(sender As Object, e As EventArgs) Handles Me.Load
-        StudentAnswerTextBox.Enabled = False
+        StudentAnswerTextBox.Enabled = True
         SubmitButton.Enabled = False
         SummaryButton.Enabled = True
     End Sub
@@ -23,6 +28,27 @@ Public Class MathContest
         SecondNumberTextBox.Enabled = True
         StudentAnswerTextBox.Enabled = False
         SubmitButton.Enabled = False
+        AdditionRadioButton.Enabled = True
+
+    End Sub
+
+    Function NumberValidation(input As String) As Boolean
+        Dim number As Integer
+        Dim converstion As Boolean = False
+        Try
+            number = CInt(input)
+            converstion = True
+        Catch ex As Exception
+        End Try
+        Return converstion
+    End Function
+
+    Private Sub ProblemTypeGroupBox_TextChanged(sender As Object, e As EventArgs) Handles ProblemTypeGroupBox.TextChanged
+        If FirstNumberTextBox.Text = "" And SecondNumberTextBox.Text = "" Then
+            StudentAnswerTextBox.Enabled = True
+        Else
+            StudentAnswerTextBox.Enabled = False
+        End If
     End Sub
 
     'Close the form 
@@ -30,22 +56,6 @@ Public Class MathContest
         Me.Close()
     End Sub
 
-    Private Sub ProblemTypeGroupBox_TextChanged(sender As Object, e As EventArgs) Handles ProblemTypeGroupBox.TextChanged
-        If FirstNumberTextBox.Text = "" And SecondNumberTextBox.Text = "" Then
-            StudentAnswerTextBox.Enabled = False
-        Else
-            StudentAnswerTextBox.Enabled = True
-        End If
-    End Sub
-    Function NumberValidation(input As String) As Boolean
-        Dim number As Integer
-        Dim converstion As Boolean = False
-        Try
-            number = CInt(input)
-        Catch ex As Exception
-        End Try
-        Return converstion
-    End Function
 
     Private Sub FirstNumberTextBox_TextChanged(sender As Object, e As EventArgs) Handles FirstNumberTextBox.TextChanged, SecondNumberTextBox.TextChanged
         Dim number1 As Boolean = NumberValidation(FirstNumberTextBox.Text)
@@ -167,4 +177,5 @@ Public Class MathContest
             MsgBox($"{StudentNameTextBox.Text} got {correctResponses} questions correct out of {attempts}")
         End If
     End Sub
+
 End Class
